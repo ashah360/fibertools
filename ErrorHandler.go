@@ -13,7 +13,7 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 			richErr = NewError(err)
 		}
 		return c.Status(richErr.Code).JSON(fiber.Map{
-			"status": richErr.Message,
+			"msg": richErr.Message,
 			"code":   richErr.Code,
 			"error":  richErr.StackTrace(),
 		})
@@ -21,12 +21,8 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 
 	fiberErr, ok := err.(*fiber.Error)
 	if ok {
-		return c.Status(fiberErr.Code).JSON(fiber.Map{
-			"status": fiberErr.Message,
-		})
+		return Message(c, fiberErr.Code, fiberErr.Message)
 	}
 
-	return c.Status(500).JSON(fiber.Map{
-		"status": err.Error(),
-	})
+	return Message(c, fiber.StatusInternalServerError, err.Error())
 }
