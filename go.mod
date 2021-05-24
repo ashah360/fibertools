@@ -1,4 +1,4 @@
-module github.com/incizzle/fibertools
+module github.com/ashah360/fibertools
 
 go 1.15
 
