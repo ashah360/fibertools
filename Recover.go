@@ -2,7 +2,6 @@ package fibertools
 
 import (
 	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,7 +10,12 @@ func Recover() fiber.Handler {
 	return func(c *fiber.Ctx) (err error) {
 		defer func() {
 			if r := recover(); r != nil {
-				err = NewError(fmt.Errorf("%v", r))
+				fiberErr, ok := r.(*fiber.Error)
+				if ok {
+					err = NewError(fiberErr)
+				} else {
+					err = NewError(fmt.Errorf("%v", r))
+				}
 			}
 		}()
 
