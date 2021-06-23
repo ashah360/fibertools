@@ -1,8 +1,9 @@
 package fibertools
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"log"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 // Error handler that is passed into `fiber.New()`. Set x-debug in request header to see stack trace of error.
@@ -16,9 +17,9 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 
 	if isDebug == "true" {
 		return c.Status(richErr.Code).JSON(fiber.Map{
-			"msg": richErr.Message,
-			"code":   richErr.Code,
-			"error":  richErr.StackTrace(),
+			"msg":   richErr.Message,
+			"code":  richErr.Code,
+			"error": richErr.StackTrace(),
 		})
 	}
 
@@ -28,5 +29,5 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 	}*/
 
 	log.Println(richErr.Message)
-	return Message(c, richErr.Code, "Internal Server Error")
+	return Message(c, richErr.Code, richErr.Message)
 }

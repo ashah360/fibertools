@@ -48,13 +48,14 @@ func NewError(err error) *RichError {
 			})
 		}
 	}
-	
+
 	fiberErr, ok := err.(*fiber.Error)
 	if !ok {
 		richErr.Code = 500
+		richErr.Message = "Internal Server Error"
 	} else {
 		richErr.Code = fiberErr.Code
 	}
 
-	return &richErr 
+	return &richErr
 }
