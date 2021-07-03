@@ -23,11 +23,6 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 		})
 	}
 
-	/*fiberErr, ok := err.(*fiber.Error)
-	if ok {
-		return Message(c, fiberErr.Code, fiberErr.Message)
-	}*/
-
 	log.Println(richErr.Message)
 	return Message(c, richErr.Code, richErr.Message)
 }
