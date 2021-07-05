@@ -51,7 +51,7 @@ func NewError(err error) *RichError {
 
 	fiberErr, ok := err.(*fiber.Error)
 	if !ok {
-		richErr.Code = 500
+		richErr.Code = fiber.StatusInternalServerError
 		richErr.Message = err.Error()
 	} else {
 		richErr.Code = fiberErr.Code

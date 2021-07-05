@@ -25,5 +25,11 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 
 	log.Println(richErr.Message)
 
-	return Message(c, richErr.Code, "Internal Server Error")
+	errMsg := richErr.Message
+
+	if richErr.Code == fiber.StatusInternalServerError {
+		errMsg = "Internal Server Error"
+	}
+
+	return Message(c, richErr.Code, errMsg)
 }
